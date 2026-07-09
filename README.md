@@ -311,7 +311,7 @@ Exemplo:
 ## 👨‍💻 Autor
 
 Desenvolvido por **Guilherme Gomes**  
-Projeto de estudo em desenvolvimento backend com Node.js + MongoDB
+Projeto de estudo em desenvolvimento backend com Node.js + Sequelize + SQLite
 
 🔗 **LinkedIn:** <https://www.linkedin.com/in/mguilherme-gomes/>  
 🔗 **GitHub:** <https://github.com/mguilhermegomes>
