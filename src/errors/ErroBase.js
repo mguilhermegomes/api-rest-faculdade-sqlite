@@ -5,7 +5,10 @@ class ErroBase {
   }
 
   enviarResposta(res) {
-    res.status(this.status).send("Erro(s): " + this.mensagem);
+    res.status(this.status).json({
+      message: this.mensagem,
+      status: this.status
+    });
   }
 }
 
