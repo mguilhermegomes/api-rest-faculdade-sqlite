@@ -32,6 +32,48 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date(),
       },
+      {
+        estudante_id: 5,
+        curso_id: 5,
+        status: "matriculado",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        estudante_id: 6,
+        curso_id: 6,
+        status: "matriculado",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        estudante_id: 7,
+        curso_id: 7,
+        status: "matriculado",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        estudante_id: 8,
+        curso_id: 8,
+        status: "matriculado",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        estudante_id: 1,
+        curso_id: 9,
+        status: "matriculado",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        estudante_id: 2,
+        curso_id: 10,
+        status: "matriculado",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
     ], {});
   },
 

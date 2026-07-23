@@ -5,22 +5,52 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     await queryInterface.bulkInsert("categorias", [
       {
-        titulo: "Node.js",
+        titulo: "node.js",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
-        titulo: "Java",
+        titulo: "java",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
-        titulo: "Python",
+        titulo: "python",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
-        titulo: "C#",
+        titulo: "c#",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        titulo: "react",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        titulo: "typeScript",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        titulo: "rust",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        titulo: "go",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        titulo: "php",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        titulo: "swift",
         createdAt: new Date(),
         updatedAt: new Date(),
       },

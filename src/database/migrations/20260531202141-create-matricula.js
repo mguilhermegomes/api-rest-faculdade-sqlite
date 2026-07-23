@@ -11,17 +11,23 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       status: {
+        allowNull: false,
+        collate: "NOCASE",
         type: Sequelize.STRING
       },
       estudante_id: {
         allowNull: false,
         type: Sequelize.INTEGER,
-        references: { model: "pessoas", key: "id" }
+        references: { model: "pessoas", key: "id" },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE"
       },
       curso_id: {
         allowNull: false,
         type: Sequelize.INTEGER,
-        references: { model: "cursos", key: "id" }
+        references: { model: "cursos", key: "id" },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE"
       },
       createdAt: {
         allowNull: false,
@@ -30,7 +36,11 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
-      }
+      },
+      deletedAt: {
+        allowNull: true,
+        type: Sequelize.DATE
+      },
     });
   },
 

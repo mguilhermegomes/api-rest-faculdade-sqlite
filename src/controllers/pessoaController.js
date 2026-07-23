@@ -1,17 +1,22 @@
 const Controller = require("./Controller.js");
 const PessoaServices = require("../services/PessoaServices.js");
-
 const pessoaServices = new PessoaServices();
-
 class PessoaController extends Controller {
   constructor() {
     super(pessoaServices);
   }
 
   async listarTodasPessoas(req, res, next) {
+    const options = {
+      where: {
+        ...req.busca
+      },
+      ...req.paginacao
+    };
+
     try {
       const listaTodasPessoas = await pessoaServices.resgatarTodasPessoas(
-        req.paginacao,
+        options
       );
       res.status(200).json(listaTodasPessoas);
     } catch (err) {
@@ -20,11 +25,9 @@ class PessoaController extends Controller {
   }
 
   async listarMatriculasPorEstudante(req, res, next) {
-    const { estudante_id } = req.params;
-
     try {
       const listaMatriculas = await pessoaServices.resgatarMatriculasEstudante(
-        estudante_id,
+        req.estudante_id,
         req.paginacao,
       );
       res.status(200).json(listaMatriculas);
@@ -34,12 +37,10 @@ class PessoaController extends Controller {
   }
 
   async listarMatriculasAtivasPorEstudante(req, res, next) {
-    const { estudante_id } = req.params;
-
     try {
       const listaMatriculas =
         await pessoaServices.resgatarMatriculasAtivasEstudante(
-          estudante_id,
+          req.estudante_id,
           req.paginacao,
         );
       res.status(200).json(listaMatriculas);
@@ -49,12 +50,10 @@ class PessoaController extends Controller {
   }
 
   async listarMatriculasCanceladasPorEstudante(req, res, next) {
-    const { estudante_id } = req.params;
-
     try {
       const listaMatriculasCanceladas =
         await pessoaServices.resgatarMatriculasCanceladasEstudante(
-          estudante_id,
+          req.estudante_id,
           req.paginacao,
         );
       res.status(200).json(listaMatriculasCanceladas);
@@ -64,13 +63,11 @@ class PessoaController extends Controller {
   }
 
   async cancelarEstudante(req, res, next) {
-    const { estudante_id } = req.params;
-
     try {
-      await pessoaServices.cancelarEstudanteEMatriculas(estudante_id);
+      await pessoaServices.cancelarEstudanteEMatriculas(req.estudante_id);
       res
         .status(200)
-        .send(`Matriculas do estudante ${estudante_id} canceladas.`);
+        .send(`Matriculas do estudante ${req.id} canceladas.`);
     } catch (err) {
       next(err);
     }

@@ -1,317 +1,293 @@
-# 🎓 API REST - Sistema Acadêmico
+# 🎓 API de Gestão Acadêmica
 
-![MIT License](https://img.shields.io/badge/License-MIT-yellow.svg)
-![Status](https://img.shields.io/badge/status-active-brightgreen)
+<div align="center">
 
-API REST desenvolvida com **Node.js**, **Express**, **Sequelize** e **SQLite**, simulando um sistema acadêmico com gestão de pessoas, cursos, categorias e matrículas.
+![Node.js](https://img.shields.io/badge/Node.js-22.x-339933?style=for-the-badge&logo=node.js&logoColor=white)
+![Express.js](https://img.shields.io/badge/Express.js-5.x-000000?style=for-the-badge&logo=express&logoColor=white)
+![Sequelize](https://img.shields.io/badge/Sequelize-ORM-52B0E7?style=for-the-badge&logo=sequelize&logoColor=white)
+![SQLite](https://img.shields.io/badge/SQLite-07405E?style=for-the-badge&logo=sqlite&logoColor=white)
+![Swagger](https://img.shields.io/badge/Swagger-OpenAPI-85EA2D?style=for-the-badge&logo=swagger&logoColor=black)
+![MIT License](https://img.shields.io/badge/license-MIT-blue?style=for-the-badge)
+![Status](https://img.shields.io/badge/status-active-success?style=for-the-badge)
 
-O projeto foi estruturado com foco em boas práticas de backend, incluindo arquitetura em camadas, relacionamento entre entidades, migrations, seeders e tratamento centralizado de erros.
-
----
-
-## 📝 Índice
-
-- [Sobre o projeto](#-sobre-o-projeto)  
-- [Tecnologias](#-tecnologias)  
-- [Arquitetura](#️-arquitetura)
-- [Funcionalidades](#️-funcionalidades)
-- [Estrutura do banco](#️-estrutura-do-banco)
-- [Estrutura de pastas](#-estrutura-de-pastas)  
-- [Instalação](#-instalação)  
-- [Configuração](#-configuração)  
-- [Execução](#️-execução)  
-- [Rotas](#-rotas-da-api)  
-- [Filtros e paginação](#-filtros-e-paginação)
-- [Relacionamentos importantes](#-relacionamentos-importantes)
-- [Tratamento de erros](#-tratamento-de-erros)
-- [Destaques técnicos](#-destaques-técnicos)
-- [Autor](#-autor)  
-- [Licença](#-licença)
+</div>
 
 ---
 
-## 📖 Sobre o projeto
+## 📖 Sobre o Projeto
 
-Este projeto simula um sistema acadêmico completo, onde é possível gerenciar:
+A **API de Gestão Acadêmica** é uma API REST desenvolvida com **Node.js**, **Express.js**, **Sequelize** e **SQLite**, simulando o funcionamento de um sistema acadêmico.
 
-- Pessoas (estudantes e docentes)
-- Categorias de cursos
-- Cursos
-- Matrículas
+O projeto utiliza a arquitetura MVC em conjunto com uma camada de Services para separar responsabilidades entre rotas, regras de negócio e acesso aos dados.
 
-Além disso, o sistema permite operações avançadas como:
+Além das operações CRUD, a API oferece paginação, busca dinâmica, validações, Soft Delete, tratamento centralizado de erros e documentação com Swagger.
 
-- Cancelamento de estudante com atualização em cascata
-- Consultas com filtros por data
-- Relacionamentos entre entidades
-- Soft delete (paranoid)
-- Paginação e ordenação dinâmica
+---
+
+## 📸 Preview
+
+![Swagger](./docs/img/swagger-preview.png)
+
+---
+
+## 🎯 Objetivos do Projeto
+
+Este projeto foi desenvolvido para aprofundar conhecimentos em APIs REST utilizando Node.js e Express, aplicando conceitos como arquitetura MVC, Service Layer, Sequelize ORM, relacionamentos entre entidades, transações, Soft Delete e documentação com OpenAPI (Swagger).
+
+---
+
+## ✨ Funcionalidades
+
+- CRUD de Pessoas (Estudantes e Docentes)
+- CRUD de Cursos
+- CRUD de Categorias
+- Gerenciamento de Matrículas
+- Busca dinâmica via Query Parameters
+- Paginação reutilizável
+- Ordenação personalizada
+- Soft Delete com Sequelize (Paranoid)
+- Transações para operações críticas
+- Validação automática de IDs
+- Validação de campos e duplicatas
+- Tratamento global de erros
+- Middleware para páginas inexistentes (404)
+- Campos pesquisáveis centralizados em constantes
+- Documentação interativa com Swagger
+- Padronização de código com ESLint
 
 ---
 
 ## 🛠 Tecnologias
 
+### Backend
+
 ![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white)
 ![Express.js](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)
+![JavaScript CommonJS](https://img.shields.io/badge/CommonJS-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+
+### Banco de Dados
+
 ![Sequelize](https://img.shields.io/badge/Sequelize-52B0E7?style=for-the-badge&logo=sequelize&logoColor=white)
 ![SQLite](https://img.shields.io/badge/SQLite-003B57?style=for-the-badge&logo=sqlite&logoColor=white)
-![JavaScript CommonJS](https://img.shields.io/badge/CommonJS-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+
+### Ferramentas
+
+![Swagger](https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=swagger&logoColor=black)
+![Sequelize CLI](https://img.shields.io/badge/Sequelize_CLI-52B0E7?style=for-the-badge&logo=sequelize&logoColor=white)
+![ESLint](https://img.shields.io/badge/ESLint-4B32C3?style=for-the-badge&logo=eslint&logoColor=white)
 ![dotenv](https://img.shields.io/badge/dotenv-8DD6F9?style=for-the-badge&logo=dotenv&logoColor=black)
 
 ---
 
 ## 🏗️ Arquitetura
 
-O projeto segue arquitetura em camadas:
-
-- `routes/` → definição de endpoints
-- `controllers/` → regras de negócio
-- `services/` → camada de abstração do Sequelize
-- `models/` → entidades do banco
-- `database/migrations` → estrutura do banco
-- `database/seeders` → dados iniciais
-- `middlewares/` → paginação e tratamento de erros
-- `utils/` → funções auxiliares
-- `errors/` → erros customizados
-
----
-
-## ⚙️ Funcionalidades
-
-### Pessoas
-
-- Criar, listar, atualizar e remover pessoas
-- Soft delete (paranoid)
-- Filtrar apenas pessoas ativas
-- Cancelar estudante e suas matrículas
-
-### Cursos
-
-- CRUD completo
-- Filtro por intervalo de data de início
-- Associação com categoria e docente
-
-### Categorias
-
-- CRUD completo
-- Relacionamento com cursos
-
-### Matrículas
-
-- Criar e gerenciar matrículas
-- Listar matrículas por estudante
-- Matrículas ativas e canceladas
-- Cursos com alta quantidade de matrículas
-
----
-
-## 🗄️ Estrutura do banco
-
-### Entidades principais
-
-- Pessoa
-- Curso
-- Categoria
-- Matrícula
-
-### Relacionamentos
-
-- Pessoa (docente) → Cursos (1:N)
-- Categoria → Cursos (1:N)
-- Pessoa (estudante) → Matrículas (1:N)
-- Curso → Matrículas (1:N)
-
----
-
-## 📁 Estrutura de pastas
+A aplicação foi organizada em camadas, separando responsabilidades entre rotas, controllers, services e models.
 
 ```text
-src/
-│
-├── controllers/        # Regras de negócio
-├── services/           # Abstração do Sequelize
-├── database/
-│   ├── config/         # Configuração SQLite
-│   ├── migrations/     # Estrutura do banco
-│   ├── models/         # Models Sequelize
-│   ├── seeders/        # Dados iniciais
-│   └── storage/        # database.sqlite
-│
-├── errors/             # Erros customizados
-├── middlewares/        # Paginação e erros
-├── routes/             # Rotas da API
-├── utils/
-│   └── helpers/        # Helpers (CPF, conversões)
-│
-├── app.js              # Configuração Express
-└── server.js           # Inicialização do servidor
+                 HTTP Request
+                       │
+                       ▼
+                  Express Router
+                       │
+                       ▼
+                 Middlewares
+        (Busca • Paginação • IDs)
+                       │
+                       ▼
+                 Controllers
+                       │
+                       ▼
+                   Services
+                       │
+                       ▼
+               Sequelize Models
+                       │
+                       ▼
+                  SQLite Database
+```
+
+Cada camada possui uma função bem definida, reduzindo o acoplamento e facilitando futuras alterações no projeto.
+
+---
+
+## 📂 Estrutura do Projeto
+
+```text
+.
+├── src
+│   ├── constants
+│   │   └── queryCampos
+│   │       ├── entidades
+│   │       └── index.js
+│   ├── controllers
+│   ├── database
+│   │   ├── config
+│   │   ├── migrations
+│   │   ├── models
+│   │   ├── seeders
+│   │   └── storage
+│   ├── errors
+│   ├── middlewares
+│   ├── routes
+│   ├── services
+│   ├── utils
+│   │   └── helpers
+│   └── app.js
+├── swagger.yaml
+├── .eslintrc.json
+├── .sequelizerc
+├── server.js
+├── package.json
+└── README.md
 ```
 
 ---
 
-## 🔧 Instalação
+## 📁 Organização das Camadas
 
-### 1. Clone o repositório
+| Diretório | Responsabilidade |
+|------------|------------------|
+| **controllers/** | Recebem as requisições HTTP e delegam o processamento para os Services |
+| **services/** | Implementam as regras de negócio e comunicação com os Models |
+| **database/models/** | Definição das entidades e relacionamentos do Sequelize |
+| **database/migrations/** | Versionamento da estrutura do banco de dados |
+| **database/seeders/** | Dados iniciais utilizados durante o desenvolvimento |
+| **routes/** | Definição de todas as rotas da aplicação |
+| **middlewares/** | Validações, paginação, busca, tratamento de erros e controle das requisições |
+| **errors/** | Classes responsáveis pelo tratamento padronizado de exceções |
+| **constants/** | Centralização dos campos permitidos para consultas e filtros |
+| **utils/helpers/** | Funções utilitárias reutilizadas em toda a aplicação |
+
+---
+
+## 🚀 Como Executar
+
+### Clone o repositório
 
 ```bash
 git clone https://github.com/mguilhermegomes/api-rest-faculdade-sqlite.git
 ```
 
-### 2. Acesse a pasta
+### Acesse a pasta do projeto
 
 ```bash
 cd api-rest-faculdade-sqlite
 ```
 
-### 3. Instale as dependências
+### Instale as dependências
 
 ```bash
 npm install
 ```
 
----
+### Configure o arquivo `.env`
 
-## 🔐 Configuração
-
-**Crie um arquivo `.env` na raiz do projeto e defina uma porta para o servidor:**
-
-```js
+```env
 DEV_PORT=3000
 ```
 
-**O banco SQLite é gerado automaticamente em:**
+### Execute as migrations
 
-```text
-src/database/storage/database.sqlite
+```bash
+npx sequelize-cli db:migrate
 ```
 
----
+### Popule o banco de dados
 
-## ▶️ Execução
+```bash
+npx sequelize-cli db:seed:all
+```
 
-**Execute o comando:**
+### Inicie a aplicação
 
 ```bash
 npm run dev
 ```
 
-**O servidor rodará em:**
+A API estará disponível em:
 
-```bash
+```text
 http://localhost:3000
 ```
 
 ---
 
-## ╰┈➤ Rotas da API
+## 📖 Documentação da API
 
-### Pessoas
+A API possui documentação interativa em **Swagger (OpenAPI 3.0)**, permitindo explorar todos os endpoints, parâmetros, modelos de dados e testar as operações diretamente pelo navegador.
 
-- `GET /pessoas`
-- `GET /pessoas/todos`
-- `GET /pessoas/:id`
-- `POST /pessoas`
-- `PUT /pessoas/:id`
-- `DELETE /pessoas/:id`
+Após iniciar o servidor, a documentação pode ser acessada em:
 
-### Cursos
-
-- `GET /cursos`
-- `GET /cursos/:id`
-- `POST /cursos`
-- `PUT /cursos/:id`
-- `DELETE /cursos/:id`
-- `GET /cursos?data_inicial=YYYY-MM-DD&data_final=YYYY-MM-DD`
-
-### Categorias
-
-- `GET /categorias`
-- `GET /categorias/:id`
-- `POST /categorias`
-- `PUT /categorias/:id`
-- `DELETE /categorias/:id`
-
-### Matrículas
-
-- `GET /matriculas`
-- `GET /pessoas/:id/matriculas`
-- `GET /pessoas/:id/matriculas/todas`
-- `GET /pessoas/:id/matriculas/canceladas`
-- `GET /pessoas/:id/matriculas/total-confirmadas`
-- `POST /pessoas/:id/matriculas`
-- `PUT /pessoas/:id/matriculas/:id`
-- `DELETE /pessoas/:id/matriculas/:id`
-
----
-
-## 🔎 Filtros e paginação
-
-### Paginação global
-
-```js
-pagina=1
-limite=3
-ordem=id:asc
-```
-
-### Filtro de cursos por data:
-
-```js
-GET /cursos?data_inicial=2023-01-01&data_final=2023-12-31
+```text
+http://localhost:3000/api-docs
 ```
 
 ---
 
-## 🔗 Relacionamentos importantes
+## ⭐ Destaques Técnicos
 
-- Um curso pertence a uma categoria
-- Um curso pertence a um docente (Pessoa)
-- Uma matrícula conecta estudante ↔ curso
-- Pessoa pode ter múltiplos escopos de matrícula:
-  - todas
-  - ativas
-  - canceladas
+- Arquitetura MVC + Service Layer
+- CRUD genérico com Services reutilizáveis
+- Middlewares reutilizáveis
+- Paginação, ordenação e busca dinâmica
+- Validação automática com Sequelize
+- Soft Delete (Paranoid)
+- Transactions
+- Scopes e Associations
+- Tratamento centralizado de erros
+- Swagger OpenAPI
 
 ---
 
-## ❌ Tratamento de erros
+## 📚 Próximas Melhorias
 
-Sistema centralizado com suporte para:
+- Autenticação com JWT
+- Testes unitários e de integração
+- Docker e Docker Compose
+- PostgreSQL
+- Pipeline de CI/CD
+- Deploy em ambiente de produção
 
-- Erros de validação (Sequelize)
-- Violação de chave estrangeira
-- Restrição de unicidade
-- Erros de banco
-- Erros customizados
+---
 
-Exemplo:
+## 🤝 Contribuindo
 
-```json
-{
-  "message": "Um ou mais valores fornecidos estão incorretos",
-  "status": 400
-}
+Contribuições são sempre bem-vindas.
+
+Caso tenha sugestões de melhorias, correções ou novas funcionalidades:
+
+1. Faça um Fork do projeto;
+2. Crie uma nova branch para sua feature;
+
+```bash
+git checkout -b feature/minha-feature
 ```
 
----
+3. Realize suas alterações;
 
-## 📌 Destaques técnicos
+4. Faça o commit:
 
-- Arquitetura em camadas (Controller → Service → Model)
-- Soft delete (paranoid)
-- Seeders para dados iniciais
-- Migrations versionadas
-- Escopos no Sequelize
-- Transações (cancelamento de estudante + matrículas)
-- Reuso de Services genéricos
-- Paginação dinâmica e reutilizável
+```bash
+git commit -m "feat: adiciona nova funcionalidade"
+```
+
+5. Envie para seu repositório:
+
+```bash
+git push origin feature/minha-feature
+```
+
+6. Abra um Pull Request.
 
 ---
 
 ## 👨‍💻 Autor
 
-Desenvolvido por **Guilherme Gomes**  
-Projeto de estudo em desenvolvimento backend com Node.js + Sequelize + SQLite
+**Guilherme Gomes**  
+
+Estudante de Informática e desenvolvedor full stack em formação, com foco em desenvolvimento backend utilizando Node.js, Express, Sequelize e APIs REST.
+
+Projeto desenvolvido durante meus estudos em Node.js e Sequelize com o objetivo de praticar arquitetura em camadas, modelagem de banco de dados e construção de APIs REST
 
 🔗 **LinkedIn:** <https://www.linkedin.com/in/mguilherme-gomes/>  
 🔗 **GitHub:** <https://github.com/mguilhermegomes>
@@ -320,32 +296,18 @@ Projeto de estudo em desenvolvimento backend com Node.js + Sequelize + SQLite
 
 ## 📄 Licença
 
-Este projeto está sob a licença MIT.
+Este projeto está licenciado sob a **MIT License**. 
 
-```text
-MIT License
-
-Copyright (c) 2026 Marcio Guilherme Araujo Gomes
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-```
+Consulte o arquivo **LICENSE** para mais informações.
 
 ---
 
-**⭐ Se este projeto te ajudou ou você achou interessante, considere deixar uma estrela no repositório.**
+<div align="center">
+
+### ⭐ Obrigado por visitar este repositório!
+
+Se este projeto contribuiu para o seu aprendizado ou serviu como referência, considere deixar uma estrela no GitHub.
+
+**Boas práticas constroem bons softwares. Bons softwares constroem grandes desenvolvedores. 🚀**
+
+</div>

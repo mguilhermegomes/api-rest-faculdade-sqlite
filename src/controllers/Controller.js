@@ -1,16 +1,21 @@
-const converterStringParaNumero = require("../utils/helpers/converterStringParaNumero.js");
-
 class Controller {
   constructor(entidadeService) {
     this.entidadeService = entidadeService;
   }
 
   async listarTodosRegistros(req, res, next) {
+    const options = {
+      where: {
+        ...req.busca
+      },
+      ...req.paginacao
+    };
+
     try {
-      const listaRecursos = await this.entidadeService.resgatarTodosRegistros(req.paginacao);
+      const listaRecursos = await this.entidadeService.resgatarTodosRegistros(options);
       return listaRecursos.length > 0
         ? res.status(200).json(listaRecursos)
-        : res.status(404).send("Nenhum recurso registrado");
+        : res.status(200).send("Nenhum recurso registrado");
     } catch (err) {
       next(err);
     }
@@ -18,19 +23,18 @@ class Controller {
 
   async listarRegistroPorId(req, res, next) {
     try {
-      const id = req.params.id;
-      const recursoEncontrado = await this.entidadeService.resgatarRegistroPorId(id);
-      return recursoEncontrado !== null
-        ? res.status(200).json(recursoEncontrado)
-        : res.status(404).send("ID não encontrado");
+      const recursoEncontrado = await this.entidadeService.resgatarRegistroPorId(req.id);
+      res.status(200).json(recursoEncontrado);
     } catch (err) {
       next(err);
     }
   }
 
   async listarRegistroEspecifico(req, res, next) {
-    const { ...params } = req.params;
-    const where = converterStringParaNumero(params);
+    const where = {
+      estudante_id: req.estudante_id,
+      id: req.id
+    };
 
     try {
       const registroEncontrado = await this.entidadeService.resgatarRegistroEspecifico(where);
@@ -44,36 +48,34 @@ class Controller {
     try {
       const dados = req.body;
       const novoRegistro = await this.entidadeService.criarRegistro(dados);
-      res.status(200).json(novoRegistro);
+      res.status(201).json(novoRegistro);
     } catch (err) {
       next(err);
     }
   }
 
   async atualizarRegistro(req, res, next) {
-    const { ...params } = req.params;
     const dados = req.body;
-    const where = converterStringParaNumero(params);
+    const where = { id: req.id};
 
     try {
-      const registroFoiAtualizado = await this.entidadeService.atualizarRegistro(dados, where);
-      registroFoiAtualizado
-        ? res.status(200).send("Registro atualizado com sucesso!")
-        : res.status(400).send("Não foi possível atualizar o registro");
+      await this.entidadeService.atualizarRegistro(dados, where);
+      res.status(200).send("Registro atualizado com sucesso!");
     } catch (err) {
       next(err);
     }
   }
 
   async removerRegistro(req, res, next) {
-    const { ...params } = req.params;
-    const where = converterStringParaNumero(params);
+    const { id, estudante_id } = req;
+    const where = {};
+
+    id ? where.id = req.id : null;
+    estudante_id ? where.estudante_id = req.estudante_id : null;
 
     try {
-      const registroFoiRemovido = await this.entidadeService.removerRegistro(where);
-      registroFoiRemovido
-        ? res.status(200).send("Registro removido com sucesso")
-        : res.status(404).send("ID não localizado");
+      await this.entidadeService.removerRegistro(where);
+      res.status(200).send("Registro removido com sucesso!");
     } catch (err) {
       next(err);
     }
