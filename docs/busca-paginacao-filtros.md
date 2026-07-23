@@ -7,11 +7,11 @@ Os filtros são processados automaticamente por um middleware reutilizável, per
 Exemplos:
 
 ```http
-GET /pessoas?nome=Marcio
+GET /pessoas?nome=Igor
 ```
 
 ```http
-GET /pessoas?email=guilherme@email.com
+GET /pessoas?email=igor@email.com
 ```
 
 ```http

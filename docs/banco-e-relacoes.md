@@ -111,6 +111,8 @@ Matricula
 └── curso_id
 ```
 
+---
+
 ## 📑 Estrutura das Migrations
 
 As migrations são responsáveis por versionar a estrutura do banco de dados da aplicação. Cada alteração no esquema é registrada em um arquivo independente, permitindo recriar o banco em qualquer ambiente de forma consistente.
